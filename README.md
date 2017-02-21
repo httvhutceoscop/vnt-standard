@@ -1,0 +1,2 @@
+# vnt-standard
+Wordpress standard

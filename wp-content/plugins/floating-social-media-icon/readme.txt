@@ -4,7 +4,7 @@ Donate link: http://www.acurax.com/happy-clients.php
 
 Tags: social media, floating social media, social network icon, social media widget, social media icon, socialmedia, social buttons, social floating icon, social icon style, floating social media button, social media button
 Requires at least: 3.0
-Tested up to: 4.7.2
+Tested up to: 4.7.5
 Stable tag: trunk
 License: GPLv2 or later
 
@@ -211,6 +211,19 @@ Have more questions ? [Drop a mail](http://www.acurax.com/contact.php/ "Drop an 
 4. Icon Size Selection, Reorder Icons Drag and Drop, Social Media Profile Link Settings.
 
 == Upgrade Notice ==
+
+= Social Media Floating Icons - 4.2.5 =
+* Fix - Bug on cannot redeclare.
+
+= Social Media Floating Icons - 4.2.4 =
+* Fix - Security Fixes
+
+= Social Media Floating Icons - 4.2.3 =
+* Fix - Bug Fixing
+
+= Social Media Floating Icons - 4.2.2 =
+* Fix - Perfomance Improvements
+* Fix - Optimized Loading Speed
 
 = Social Media Floating Icons - 4.2.1 =
 * Fix - Perfomance Improvements
@@ -428,6 +441,19 @@ Have more questions ? [Drop a mail](http://www.acurax.com/contact.php/ "Drop an 
 * Fixed Design Icon Clarity
 
 == Changelog ==
+
+= Social Media Floating Icons - 4.2.5 =
+* Fix - Bug on cannot redeclare.
+
+= Social Media Floating Icons - 4.2.4 =
+* Fix - Security Fixes
+
+= Social Media Floating Icons - 4.2.3 =
+* Fix - Bug Fixing
+
+= Social Media Floating Icons - 4.2.2 =
+* Fix - Perfomance Improvements
+* Fix - Optimized Loading Speed
 
 = Social Media Floating Icons - 4.2.1 =
 * Fix - Perfomance Improvements

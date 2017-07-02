@@ -8,8 +8,7 @@ if($acx_fsmi_purchased_li_array == "" || !is_array($acx_fsmi_purchased_li_array)
 {
 	$acx_fsmi_purchased_li_array = array();
 }
-if(!empty($acx_fsmi_purchased_li_array))
-{
+
 	if ( ! class_exists( 'ACX_FSMI_LICENCE_TGM_Plugin_Activation' ) ) {
 
 	/**
@@ -1224,7 +1223,7 @@ if(!empty($acx_fsmi_purchased_li_array))
 				'activate' => '',
 				'dismiss'  => $this->dismissable ? '<a href="' . esc_url( wp_nonce_url( add_query_arg( 'acx_fsmi_licence_tgmpa-dismiss', 'dismiss_admin_notices' ), 'acx_fsmi_licence_tgmpa-dismiss-' . get_current_user_id() ) ) . '" class="dismiss-notice" target="_parent">' . esc_html( $this->strings['dismiss'] ) . '</a>' : '',
 				);
- 			$link_template = '<a href="%2$s">%1$s</a><a class="acx_fsmi_install_ignore">Never show this again</a>';
+ 			$link_template = '<a href="%2$s">%1$s</a>';
 
 			if ( current_user_can( 'install_plugins' ) ) {
 				if ( $install_count > 0 ) {
@@ -3804,6 +3803,14 @@ if ( ! class_exists( 'ACX_FSMI_LICENCE_TGMPA_Utils' ) ) {
 
 function acx_fsmi_purachase_licence_form()
 {
+	do_action("acx_fsmi_show_purchased_li_table");
+}
+add_action("acx_fsmi_addon_hook_option_field_content","acx_fsmi_purachase_licence_form",20);
+
+function acx_fsmi_show_purchased_license_html()
+{
+	$response_stat = '';
+	$acx_license_status = "";
 	$acx_fsmip_licence_array = get_option('acx_fsmip_licence_array');
 	if(is_serialized($acx_fsmip_licence_array))
 	{
@@ -3812,6 +3819,15 @@ function acx_fsmi_purachase_licence_form()
 	if($acx_fsmip_licence_array == "" || !is_array($acx_fsmip_licence_array))
 	{
 		$acx_fsmip_licence_array = array();
+	}
+	$acx_fsmi_purchased_li_array = get_option('acx_fsmi_purchased_li_array');
+	if(is_serialized($acx_fsmi_purchased_li_array))
+	{
+		$acx_fsmi_purchased_li_array = unserialize($acx_fsmi_purchased_li_array);
+	}
+	if($acx_fsmi_purchased_li_array == "" || !is_array($acx_fsmi_purchased_li_array))
+	{
+		$acx_fsmi_purchased_li_array = array();
 	}
 	?>
 	<div class="acx_fsmi_purchased_li_cvr">
@@ -3834,30 +3850,45 @@ function acx_fsmi_purachase_licence_form()
 		<tr><td colspan="5"><?php _e('No Licence found','floating-social-media-icon');?></td></tr>
 		<?php
 	}
-	$acx_fsmi_plugin_stat = "";
+	$acx_fsmi_plugin_stat = $acx_li_slug = "";
+	$version_to_print = "-";
 	$acx_refresh_stat = 'acx_hide_refresh';
 	foreach($acx_fsmip_licence_array as $key => $value)
 	{
-		$acx_plugin_array = acx_fsmi_get_purchased_plugin_details($value['licence_code']);
-		$acx_active_plugin_stat = acx_fsmi_get_active_plugin_status($acx_plugin_array['slug']);
-		if($acx_active_plugin_stat == true)
+		if(!array_key_exists($value['licence_code'],$acx_fsmi_purchased_li_array))
 		{
-			$acx_fsmi_plugin_stat = __('Active','floating-social-media-icon');
+			$response_stat = acx_fsmi_license_refresh_with_forcing($value['licence_code'],$key);
 		}
-		else
+	}
+	foreach($acx_fsmip_licence_array as $key => $value)
+	{
+		
+		$acx_plugin_array = acx_fsmi_get_purchased_plugin_details($value['licence_code']);
+		if(ISSET($acx_plugin_array['slug']) && ISSET($acx_plugin_array['download_dynamic_url']))
 		{
-			$acx_fsmi_plugin_stat =  __('Not Active <a href="'.wp_nonce_url(admin_url("admin.php?page=Acurax-Social-Icons-Settings-Install-Addons")).'">[Install Now]</a>','floating-social-media-icon');
+
+			$acx_license_status = $acx_plugin_array['status'];
+			$acx_li_slug = $acx_plugin_array['slug'];
+			$version_to_print = get_plugin_version_number($acx_li_slug);
+			$acx_active_plugin_stat = acx_fsmi_get_active_plugin_status($acx_li_slug);
+			if($acx_active_plugin_stat == true)
+			{
+				$acx_fsmi_plugin_stat = __('Active','floating-social-media-icon');
+			}
+			else 
+			{
+				$acx_fsmi_plugin_stat =  __('Not Active <a href="'.wp_nonce_url(admin_url("admin.php?page=Acurax-Social-Icons-Settings-Install-Addons")).'">[Install Now]</a>','floating-social-media-icon');
+			}
 		}
 		if(function_exists('check_acx_pfsmi_license') && !function_exists('acx_check_fsmip_offline_license'))
 		{
 			$acx_refresh_stat = 'acx_show_refresh';
 		}
-		
 		?>
 		<tr><td><?php echo $value['addon_name']; ?></td>
 		<td><?php echo $value['licence_code']; ?></td>
-		<td><?php echo $value['version']; ?></td>
-		<td><?php echo $acx_plugin_array['status']; ?></td>
+		<td><?php echo $version_to_print; ?></td>
+		<td><?php echo $acx_license_status; ?></td>
 		<td><?php echo $acx_fsmi_plugin_stat; ?></td>
 		<td data-licence="<?php echo $value['licence_code']; ?>" data-key="<?php echo $key;?>"><span class="ax_fsmi_action_icon acx_fsmi_lic_refresh <?php echo $acx_refresh_stat; ?>" title="<?php _e("Refresh","floating-social-media-icon");?>"></span><span class="ax_fsmi_action_icon acx_fsmi_lic_del" title="<?php _e("Delete","floating-social-media-icon");?>"></span></td>
 		</tr>
@@ -3868,18 +3899,17 @@ function acx_fsmi_purachase_licence_form()
 	</div><!-- acx_fsmi_license_table_list -->
 	</div><!-- acx_fsmi_purchased_li_cvr -->
 	<?php
+	
 }
-add_action("acx_fsmi_addon_hook_option_field_content","acx_fsmi_purachase_licence_form",20);
-} // End of !empty($acx_fsmi_purchased_li_array)
+add_action("acx_fsmi_show_purchased_li_table", "acx_fsmi_show_purchased_license_html");
 if(!function_exists('acx_fsmi_get_purchased_plugin_details'))
 {
 	function acx_fsmi_get_purchased_plugin_details($licence)
 	{
 		$licence = trim($licence);
 		$response_array = array(
-		"download_url" => "",
-		"slug" => plugin_basename( __FILE__ ),
-		"ignore_stat" => "no",
+		"download_dynamic_url" => "",
+		"slug" => "",
 		"status" => ""
 		);
 		if($licence != "")
@@ -3900,7 +3930,6 @@ if(!function_exists('acx_fsmi_get_purchased_plugin_details'))
 					$response_array = array(
 						"download_dynamic_url" => $value['download_dynamic_url'],
 						"slug" => $value['slug'],
-						"ignore_stat" => $value['ignore_stat'],
 						"status" => $value['status']
 						);
 				}
@@ -3908,7 +3937,6 @@ if(!function_exists('acx_fsmi_get_purchased_plugin_details'))
 		}
 		return $response_array;
 	}
-	
 }
 function acx_fsmi_license_notice_install_pending() {
     ?>
@@ -3932,20 +3960,28 @@ function acx_fsmi_licnece_install_required_plugins() {
 		$acx_fsmip_licence_array = array();
 	}
 	$display_notice = false;
+	$acx_li_slug = $acx_li_download_url = '';
+	$acx_active_plugin_stat = '';
 	foreach($acx_fsmip_licence_array as $key => $value)
 	{
+	
 		$acx_plugin_array = acx_fsmi_get_purchased_plugin_details($value['licence_code']);
-		$acx_active_plugin_stat = acx_fsmi_get_active_plugin_status($acx_plugin_array['slug']);
+		if(ISSET($acx_plugin_array['slug']) && ISSET($acx_plugin_array['download_dynamic_url']))
+		{
+			$acx_li_download_url = $acx_plugin_array['download_dynamic_url'];
+			$acx_li_slug = $acx_plugin_array['slug'];
+			$acx_active_plugin_stat = acx_fsmi_get_active_plugin_status($acx_li_slug);
+		}
 		$plugins = array(
 			array(
 				'name'         => $value['addon_name'], // The plugin name.
-				'slug'         => $acx_plugin_array['slug'], // The plugin slug (typically the folder name).
-				'source'       => $acx_plugin_array['download_dynamic_url'], // The plugin source.
+				'slug'         => $acx_li_slug, // The plugin slug (typically the folder name).
+				'source'       => $acx_li_download_url, // The plugin source.
 				'required'     => true, // If false, the plugin is only 'recommended' instead of required.
 			),
 		);
 		$config = array(
-			'id'           => $acx_plugin_array['slug'],
+			'id'           => $acx_li_slug,
 			'default_path' => '', 
 			'menu'         => 'Acurax-Social-Icons-Settings-Install-Addons',
 			'parent_slug'  => 'Acurax-Social-Icons-Settings',
@@ -3968,15 +4004,11 @@ function acx_fsmi_licnece_install_required_plugins() {
 			),
 			),
 		);
-		$acx_active_plugin_stat = acx_fsmi_get_active_plugin_status($acx_plugin_array['slug']);
 		
-		if($acx_active_plugin_stat == false)
+		if($acx_active_plugin_stat === false)
 		{
-			if($acx_plugin_array['ignore_stat'] == 'no'  )
-			{
-				acx_fsmi_licence_tgmpa( $plugins, $config );
-				$display_notice = true;
-			}
+			acx_fsmi_licence_tgmpa( $plugins, $config );
+			$display_notice = true;
 		}
 	}
 	if($display_notice == true)
@@ -3989,18 +4021,50 @@ add_action( 'acx_fsmi_licence_tgmpa_register', 'acx_fsmi_licnece_install_require
 function acx_fsmi_get_active_plugin_status($acx_slug)
 {
 	$acx_return = false;
-	$acx_fsmi_active_plugin_arr = get_option('active_plugins');
-	foreach($acx_fsmi_active_plugin_arr as $key => $value)
+	if($acx_slug != "")
 	{
-		if(strpos($value,$acx_slug) !== false)
+		$acx_fsmi_active_plugin_arr = get_option('active_plugins');
+		foreach($acx_fsmi_active_plugin_arr as $key => $value)
 		{
-			$acx_return = true;
+			if(strpos($value,$acx_slug) !== false)
+			{
+				$acx_return = true;
+			}
 		}
 	}
 	return $acx_return;
 }
+function get_plugin_version_number($acx_slug)
+{
+	$acx_version_return = '-';
+	$acx_plugin_data_array = array();
+	if($acx_slug != "")
+	{
+		if ( ! function_exists( 'get_plugins' ) )
+	        require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	    $plugin_folder = get_plugins( );
+	    $plugin_file ='';
+		$acx_fsmi_active_plugin_arr = get_option('active_plugins');
+		foreach($acx_fsmi_active_plugin_arr as $key => $value)
+		{
+			if(strpos($value,$acx_slug) !== false)
+			{
+				$plugin_file =  $value ;
+				$acx_version_return =  $plugin_folder[$plugin_file]['Version'];
+			}
+		}
+	  
+	}
+	return $acx_version_return;
+}
 
 function acx_fsmi_licence_btn_fn()
+{
+	do_action("acx_fsmi_show_add_li_btn_hook");
+}
+add_action("acx_fsmi_addon_hook_option_field_content","acx_fsmi_licence_btn_fn",30);
+// show add licence fields
+function acx_fsmi_show_license_add_button_html()
 {
 	?>
 	<div class="acx_fsmi_add_p_licen_cvr" style="width:100%;float:left;margin-top:50px;">
@@ -4069,40 +4133,6 @@ function acx_fsmi_licence_btn_fn()
 			
 		
 	});
-	</script>
-	<?php
-
-}
-add_action("acx_fsmi_addon_hook_option_field_content","acx_fsmi_licence_btn_fn",30);
-function acx_fsmi_li_add_script()
-{?>
-<script>
-jQuery(".acx_fsmi_install_ignore").click(function()
-	{
-		var acx_to_ignore = jQuery(this).parent().parent().parent().find("em").html();
-		var acx_load = '<div id="acx_fsmip_loading_1"><div class="load_1"></div></div>';
-		jQuery('body').append(acx_load);
-		var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
-		var acx_fsmip_order = '&acx_to_ignore='+acx_to_ignore+'&action=acx_fsmi_ignore_activation_message'+'&acx_fsmi_ignore_activation_message_w_c_n=<?php echo wp_create_nonce('acx_fsmi_ignore_activation_message_w_c_n'); ?>';
-		jQuery.post(ajaxurl, acx_fsmip_order, function(theResponse)
-		{
-			jQuery("#acx_fsmip_loading_1").remove();
-			if(theResponse == "success")
-			{	
-				alert('<?php _e('Successfully Ignored the message box !!','floating-social-media-icon');?>');
-				var link = window.location.href;
-				if(link !== '')
-				{
-					window.location=link;
-				}
-			}
-			else
-			{
-				alert('<?php _e('Something went wrong.. Try again !!','floating-social-media-icon');?>');
-			}
-		});
-		
-	});
 	jQuery(".acx_fsmi_lic_del").click(function()
 	{
 		var acx_confirm = confirm("<?php _e('Are you sure to delete this license?','floating-social-media-icon')?>");
@@ -4146,7 +4176,7 @@ jQuery(".acx_fsmi_install_ignore").click(function()
 				jQuery("#acx_fsmip_loading_1").remove();
 				if(theResponse == "success")
 				{
-					alert('<?php _e('Successfully reissued the licence !!','floating-social-media-icon');?>');
+					alert('<?php _e('Successfully refreshed the license !!','floating-social-media-icon');?>');
 					var link = window.location.href;
 					if(link !== '')
 					{
@@ -4156,10 +4186,10 @@ jQuery(".acx_fsmi_install_ignore").click(function()
 			});
 		}
 	});	
-</script>
-<?php	
+	</script>
+	<?php
 }
-add_action("acx_fsmi_addon_hook_option_footer","acx_fsmi_li_add_script");
+add_action("acx_fsmi_show_add_li_btn_hook","acx_fsmi_show_license_add_button_html");
 // delete installed licence 
 function acx_fsmi_install_licence_del_callback()
 {
@@ -4241,127 +4271,13 @@ function acx_fsmi_delete_purchased_li($licence_code)
 		
 	}
 }
-// refresh 
-function acx_fsmi_install_licence_refresh_callback()
-{
-	$key = $licence = $id = "";
-	$response_stat = "failed";
-	if(ISSET($_POST['key']))
-	{
-		$key = $_POST['key'];
-	}
-	if(ISSET($_POST['licence']))
-	{
-		$licence = $_POST['licence'];
-	}
-	$result = check_acx_pfsmi_license($licence,'',true,$id);
-	if(ISSET($result["localkey"]))
-	{
-		$local_key = $result["localkey"];
-	}
-	else{
-		$local_key = "";
-	}
-	$acx_fsmip_licence_array = get_option('acx_fsmip_licence_array');
-	if(is_serialized($acx_fsmip_licence_array))
-	{
-		$acx_fsmip_licence_array = unserialize($acx_fsmip_licence_array);
-	}
-	if($acx_fsmip_licence_array == "" || !is_array($acx_fsmip_licence_array))
-	{
-		$acx_fsmip_licence_array = array();
-	}
-	$acx_fsmi_purchased_li_array = get_option('acx_fsmi_purchased_li_array');
-	if(is_serialized($acx_fsmi_purchased_li_array))
-	{
-		$acx_fsmi_purchased_li_array = unserialize($acx_fsmi_purchased_li_array);
-	}
-	if($acx_fsmi_purchased_li_array == "" || !is_array($acx_fsmi_purchased_li_array))
-	{
-		$acx_fsmi_purchased_li_array = array();
-	}
-	if(ISSET($result["status"]))
-	{
-		if($result["status"] == 'Active')
-		{
-			if(ISSET($acx_fsmip_licence_array[$key]))
-			{
-				if(array_key_exists('local_key',$acx_fsmip_licence_array[$key]))
-				{
-					$acx_fsmip_licence_array[$key]['local_key'] = $local_key;
-					
-					if(!is_serialized($acx_fsmip_licence_array))
-					{
-						$acx_fsmip_licence_array = serialize($acx_fsmip_licence_array);
-					}
-					update_option('acx_fsmip_licence_array',$acx_fsmip_licence_array);
-					
-				}
-			}
-			
-		} 
-		$acx_fsmi_purchased_li_array[$licence]['status'] = $result['status'];
-		if(!is_serialized($acx_fsmi_purchased_li_array))
-		{
-			$acx_fsmi_purchased_li_array = serialize($acx_fsmi_purchased_li_array);
-		}
-		update_option('acx_fsmi_purchased_li_array',$acx_fsmi_purchased_li_array); 
-		$response_stat = "success";
-	}
-	echo $response_stat;
-	die();
-}
-add_action("wp_ajax_acx_fsmi_install_licence_refresh","acx_fsmi_install_licence_refresh_callback");
-if(!function_exists('check_acx_pfsmi_license'))
-{
-	
-	
-}
-// ignore plugin activation callback
-function acx_fsmi_ignore_activation_message_callback()
-{
-	if (!isset($_POST['acx_fsmi_ignore_activation_message_w_c_n'])) die("<br><br>".__('Unknown Error Occurred, Try Again... ','floating-social-media-icon')."<a href=''>".__('Click Here','floating-social-media-icon')."</a>");
-	if (!wp_verify_nonce($_POST['acx_fsmi_ignore_activation_message_w_c_n'],'acx_fsmi_ignore_activation_message_w_c_n')) die("<br><br>".__('Unknown Error Occurred, Try Again... ','floating-social-media-icon')."<a href=''>".__('Click Here','floating-social-media-icon')."</a>");
-	$acx_to_ignore = "";
-	$response_stat = "failed";
-	if(ISSET($_POST['acx_to_ignore']))
-	{
-		$acx_to_ignore = $_POST['acx_to_ignore'];
-	}
-	$acx_fsmi_purchased_li_array = get_option('acx_fsmi_purchased_li_array');
-	if(is_serialized($acx_fsmi_purchased_li_array))
-	{
-		$acx_fsmi_purchased_li_array = unserialize($acx_fsmi_purchased_li_array);
-	}
-	if($acx_fsmi_purchased_li_array == "" || !is_array($acx_fsmi_purchased_li_array))
-	{
-		$acx_fsmi_purchased_li_array = array();
-	}
-	foreach($acx_fsmi_purchased_li_array as $key => $value)
-	{
-		if($value['name'] == $acx_to_ignore)
-		{
-			$acx_fsmi_purchased_li_array[$key]['ignore_stat'] = "yes";
-			$response_stat = "success";
-		}
-	}
-	 if(!is_serialized($acx_fsmi_purchased_li_array))
-	{
-		$acx_fsmi_purchased_li_array = serialize($acx_fsmi_purchased_li_array);
-	}
-	update_option('acx_fsmi_purchased_li_array',$acx_fsmi_purchased_li_array); 
-	echo $response_stat;
-	
-	die();
-}
-add_action("wp_ajax_acx_fsmi_ignore_activation_message","acx_fsmi_ignore_activation_message_callback");
- 
  // add purchased licence callback
 function acx_fsmi_purchased_licence_add_callback()
 {
 	if (!isset($_POST['acx_fsmi_purchased_licence_w_c_n'])) die("<br><br>".__('Unknown Error Occurred, Try Again... ','floating-social-media-icon')."<a href=''>".__('Click Here','floating-social-media-icon')."</a>");
 	if (!wp_verify_nonce($_POST['acx_fsmi_purchased_licence_w_c_n'],'acx_fsmi_purchased_licence_w_c_n')) die("<br><br>".__('Unknown Error Occurred, Try Again... ','floating-social-media-icon')."<a href=''>".__('Click Here','floating-social-media-icon')."</a>");
 	$acx_fsmi_purchased_licence = "";
+	$retry = true;	
 	if(ISSET($_POST['acx_fsmi_purchased_licence']))
 	{
 		$acx_fsmi_purchased_licence = trim($_POST['acx_fsmi_purchased_licence']);
@@ -4371,9 +4287,30 @@ function acx_fsmi_purchased_licence_add_callback()
 	{
 		$acx_fsmip_licence_array = unserialize($acx_fsmip_licence_array);
 	}
+	$acx_fsmip_retry_array = get_option('acx_fsmip_retry_array');
+	if(is_serialized($acx_fsmip_retry_array))
+	{
+		$acx_fsmip_retry_array = unserialize($acx_fsmip_retry_array);
+	}
+	if($acx_fsmip_retry_array == "")
+	{
+		$acx_fsmip_retry_array = array();
+	}
+	if(!is_array($acx_fsmip_retry_array))
+	{
+		$acx_fsmip_retry_array = array();
+	}
+	if(ISSET($acx_fsmip_retry_array[$acx_fsmi_purchased_licence]['activation_licence_check']))
+	{
+		if($acx_fsmip_retry_array[$acx_fsmi_purchased_licence]['activation_licence_check'] >= 3)
+		{
+			$retry = false;	
+		}
+	}
+		
 	if($acx_fsmi_purchased_licence != "")
 	{
-		if (strpos($acx_fsmi_purchased_licence, 'ACX-FSMI') !== false || strpos($acx_fsmi_purchased_licence, 'FSMI-PA') !== false) 
+		if (strpos($acx_fsmi_purchased_licence, 'FSMI') !== false) 
 		{
 			$licence_code_arr = explode('-',$acx_fsmi_purchased_licence);
 			if(is_array($licence_code_arr))
@@ -4391,62 +4328,87 @@ function acx_fsmi_purchased_licence_add_callback()
 			}
 			
 		
-		$acx_fsmi_ip =  isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : $_SERVER['LOCAL_ADDR'];
-		$acx_fsmi_domain = $_SERVER['SERVER_NAME'];
-		$acx_fsmi_directory = dirname(__FILE__);
-		$acx_fsmi_args = array(
-			'action' 	=> 'acx-li-check-latest-version',
-			'method'	=> 'addon_activation',
-			'directory' => $acx_fsmi_directory,
-			'unique_id' => $acx_fsmip_index,
-			'domain' 	=> $acx_fsmi_domain,
-			'ip' 		=> $acx_fsmi_ip,
-			'licence' 	=> $acx_fsmi_purchased_licence
-		);
-		$acx_fsmi_unique_id = "";
-		// Send request checking for an update
-		$response = acx_fsmi_licence_activation_api_request( $acx_fsmi_args );
-		$response = json_decode($response, true);
-		if($response['response_status'] == "success" &&  $response['status'] == "Active")
-		{
-			$acx_fsmi_purchased_li_array = get_option('acx_fsmi_purchased_li_array');
-			if(is_serialized($acx_fsmi_purchased_li_array))
+			$acx_fsmi_ip =  isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : $_SERVER['LOCAL_ADDR'];
+			$acx_fsmi_domain = $_SERVER['SERVER_NAME'];
+			$acx_fsmi_directory = dirname(__FILE__);
+			$acx_fsmi_args = array(
+				'action' 	=> 'acx-li-check-latest-version',
+				'method'	=> 'addon_activation',
+				'directory' => $acx_fsmi_directory,
+				'unique_id' => $acx_fsmip_index,
+				'domain' 	=> $acx_fsmi_domain,
+				'ip' 		=> $acx_fsmi_ip,
+				'licence' 	=> $acx_fsmi_purchased_licence
+			);
+			$acx_fsmi_unique_id = "";
+			// Send request checking for an update
+			if($retry == true)
 			{
-				$acx_fsmi_purchased_li_array = unserialize($acx_fsmi_purchased_li_array);
+				$response = acx_fsmi_licence_activation_api_request( $acx_fsmi_args );
+				$response = json_decode($response, true);
 			}
-			if($acx_fsmi_purchased_li_array == "" || !is_array($acx_fsmi_purchased_li_array))
-			{
-				$acx_fsmi_purchased_li_array = array();
-			}
-			$acx_fsmi_unique_id = trim($response['unique_id']);
-			$acx_fsmi_purchased_li_array[$acx_fsmi_purchased_licence] = array(
-			'slug' => $response['slug'],
-			'status' => $response['status'],
-			'download_dynamic_url' => $response['download_dynamic_url'],
-			'ignore_stat' => $response['ignore_stat']
-			); 
-			// update licence array
 			
-			$acx_fsmip_licence_array[$acx_fsmi_unique_id]['addon_name'] = $response['name'];
-			$acx_fsmip_licence_array[$acx_fsmi_unique_id]['version'] = $response['new_version'];
-			$acx_fsmip_licence_array[$acx_fsmi_unique_id]['licence_code'] = $acx_fsmi_purchased_licence;
-			$acx_fsmip_licence_array[$acx_fsmi_unique_id]['local_key'] = $response['localkey'];
-			if(!is_serialized($acx_fsmip_licence_array))
+			if(!ISSET($response['response_status']) && !ISSET($response['status']))
 			{
-				$acx_fsmip_licence_array = serialize($acx_fsmip_licence_array);
+				if(ISSET($acx_fsmip_retry_array[$acx_fsmi_purchased_licence]['activation_licence_check']))
+				{
+					$acx_fsmip_retry_array[$acx_fsmi_purchased_licence]['activation_licence_check'] = $acx_fsmip_retry_array[$acx_fsmi_purchased_licence]['activation_licence_check'] + 1;
+				}
+				else{
+					$acx_fsmip_retry_array[$acx_fsmi_purchased_licence]['activation_licence_check'] =  1;
+				}
 			}
-			update_option('acx_fsmip_licence_array',$acx_fsmip_licence_array); 
-			if(!is_serialized($acx_fsmi_purchased_li_array))
+			else
 			{
-				$acx_fsmi_purchased_li_array = serialize($acx_fsmi_purchased_li_array);
+				if($response['response_status'] == "success" &&  $response['status'] == "Active")
+				{
+					$acx_fsmi_purchased_li_array = get_option('acx_fsmi_purchased_li_array');
+					if(is_serialized($acx_fsmi_purchased_li_array))
+					{
+						$acx_fsmi_purchased_li_array = unserialize($acx_fsmi_purchased_li_array);
+					}
+					if($acx_fsmi_purchased_li_array == "" || !is_array($acx_fsmi_purchased_li_array))
+					{
+						$acx_fsmi_purchased_li_array = array();
+					}
+					$acx_fsmi_unique_id = trim($response['unique_id']);
+					$acx_fsmi_purchased_li_array[$acx_fsmi_purchased_licence] = array(
+					'slug' => $response['slug'],
+					'status' => $response['status'],
+					'download_dynamic_url' => $response['download_dynamic_url']
+					); 
+					// update licence array
+					
+					$acx_fsmip_licence_array[$acx_fsmi_unique_id]['addon_name'] = $response['name'];
+					$acx_fsmip_licence_array[$acx_fsmi_unique_id]['version'] = $response['new_version'];
+					$acx_fsmip_licence_array[$acx_fsmi_unique_id]['licence_code'] = $acx_fsmi_purchased_licence;
+					if($response['localkey'] != "")
+					{
+						$acx_fsmip_licence_array[$acx_fsmi_unique_id]['local_key'] = $response['localkey'];
+					}
+					if(!is_serialized($acx_fsmip_licence_array))
+					{
+						$acx_fsmip_licence_array = serialize($acx_fsmip_licence_array);
+					}
+					update_option('acx_fsmip_licence_array',$acx_fsmip_licence_array); 
+					if(!is_serialized($acx_fsmi_purchased_li_array))
+					{
+						$acx_fsmi_purchased_li_array = serialize($acx_fsmi_purchased_li_array);
+					}
+					update_option('acx_fsmi_purchased_li_array',$acx_fsmi_purchased_li_array); 
+					$acx_fsmip_retry_array[$acx_fsmi_purchased_licence]['activation_licence_check'] =  0;
+					if(!is_serialized($acx_fsmip_retry_array))
+					{
+						$acx_fsmip_retry_array = serialize($acx_fsmip_retry_array);
+					}
+					update_option('acx_fsmip_retry_array',$acx_fsmip_retry_array);
+					echo "success";
+				}
+				else
+				{
+					echo __("Sorry, Your license code is invalid, Please contact support","floating-social-media-icon");
+				}
 			}
-			update_option('acx_fsmi_purchased_li_array',$acx_fsmi_purchased_li_array); 
-			echo "success";
-		}
-		else
-		{
-			echo __("Your Licence is ","floating-social-media-icon").$response['status'].__(" Please contact your admin","floating-social-media-icon");
-		}
 		}
 		else
 		{

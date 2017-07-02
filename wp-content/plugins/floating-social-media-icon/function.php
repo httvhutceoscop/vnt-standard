@@ -579,44 +579,47 @@ function acx_load_floating_js()
 	$acx_si_icon_size = get_option('acx_si_icon_size');
 	////////////////////////////////////////////////////////////////////////////
 	//STARTING CROSS CHECK			    $count,$icon_size,$set_value  
-	function acx_si_check_loaded_count($count,$icon_size,$set_x_value,$set_y_value)
+	if (!function_exists('acx_si_check_loaded_count')) 
 	{
-		// Defining Values To Use
-		$acx_si_icon_size = get_option('acx_si_icon_size'); // Getting Value From DB :)
-		$acx_si_twitter = get_option('acx_si_twitter');
-		$acx_si_facebook = get_option('acx_si_facebook');
-		$acx_si_youtube = get_option('acx_si_youtube');
-		$acx_si_linkedin = get_option('acx_si_linkedin');
-		$acx_si_feed = get_option('acx_si_feed');
-		$acx_si_instagram = get_option('acx_si_instagram');
-		$acx_si_gplus = get_option('acx_si_gplus');
-		$acx_si_pinterest = get_option('acx_si_pinterest');
-		$count_check = 0;
-		$l1 = 0;
-		$l2 = 0;
-		$l3 = 0;
-		$l4 = 0;
-		$l5 = 0;
-		$l6 = 0;
-		$l7 = 0;
-		$l8 = 0;
-		if ($acx_si_twitter != "") { $l1 = 1; }
-		if ($acx_si_facebook != "") { $l2 = 1; }
-		if ($acx_si_youtube != "") { $l3 = 1; }
-		if ($acx_si_linkedin != "") { $l4 = 1; }
-		if ($acx_si_gplus != "") { $l5 = 1; }
-		if ($acx_si_pinterest != "") { $l6 = 1; }
-		if ($acx_si_feed != "") { $l7 = 1; }
-		if ($acx_si_instagram != "") { $l8 = 1; }
-		$count_check = $l1 + $l2 + $l3 + $l4 + $l5 + $l6 + $l7 + $l8;
-		if ($acx_si_icon_size == $icon_size && $count_check == $count)
+		function acx_si_check_loaded_count($count,$icon_size,$set_x_value,$set_y_value)
 		{
-			global $x;
-			global $y;
-			$x = $set_x_value;
-			$y = $set_y_value;
-		}
-	} // ENDING THE FUNCTION TO CROS CHECK
+			// Defining Values To Use
+			$acx_si_icon_size = get_option('acx_si_icon_size'); // Getting Value From DB :)
+			$acx_si_twitter = get_option('acx_si_twitter');
+			$acx_si_facebook = get_option('acx_si_facebook');
+			$acx_si_youtube = get_option('acx_si_youtube');
+			$acx_si_linkedin = get_option('acx_si_linkedin');
+			$acx_si_feed = get_option('acx_si_feed');
+			$acx_si_instagram = get_option('acx_si_instagram');
+			$acx_si_gplus = get_option('acx_si_gplus');
+			$acx_si_pinterest = get_option('acx_si_pinterest');
+			$count_check = 0;
+			$l1 = 0;
+			$l2 = 0;
+			$l3 = 0;
+			$l4 = 0;
+			$l5 = 0;
+			$l6 = 0;
+			$l7 = 0;
+			$l8 = 0;
+			if ($acx_si_twitter != "") { $l1 = 1; }
+			if ($acx_si_facebook != "") { $l2 = 1; }
+			if ($acx_si_youtube != "") { $l3 = 1; }
+			if ($acx_si_linkedin != "") { $l4 = 1; }
+			if ($acx_si_gplus != "") { $l5 = 1; }
+			if ($acx_si_pinterest != "") { $l6 = 1; }
+			if ($acx_si_feed != "") { $l7 = 1; }
+			if ($acx_si_instagram != "") { $l8 = 1; }
+			$count_check = $l1 + $l2 + $l3 + $l4 + $l5 + $l6 + $l7 + $l8;
+			if ($acx_si_icon_size == $icon_size && $count_check == $count)
+			{
+				global $x;
+				global $y;
+				$x = $set_x_value;
+				$y = $set_y_value;
+			}
+		} // ENDING THE FUNCTION TO CROS CHECK
+	}
 	/**************************************************************************
 	CONDITIONS STARTING HERE  
 	if X Decreases then move to Right
@@ -738,7 +741,7 @@ function pbl_footer()
 			echo "<div style='".$acx_fsmi_bl_style."'>";
 			$acx_get_url = "http://";
 			$acx_get_url .= $_SERVER['HTTP_HOST'];
-			$acx_get_url .= $_SERVER['REQUEST_URI'];
+			$acx_get_url .= esc_url($_SERVER['REQUEST_URI']);
 			$acx_installation_domain = $_SERVER['HTTP_HOST'];
 			$acx_installation_domain = str_replace("www.","",$acx_installation_domain);
 			$acx_installation_domain = str_replace(".","_",$acx_installation_domain);
@@ -1546,6 +1549,197 @@ function acx_fsmi_saveorder_callback()
 }
 	die(); // this is required to return a proper result
 } add_action('wp_ajax_acx_fsmi_saveorder', 'acx_fsmi_saveorder_callback');
+// refresh 
+function acx_fsmi_install_licence_refresh_callback()
+{
+	if (!isset($_POST['acx_fsmi_install_licence_refresh_w_c_n'])) die("<br><br>".__('Unknown Error Occurred, Try Again... ','floating-social-media-icon')."<a href=''>".__('Click Here','floating-social-media-icon')."</a>");
+	if (!wp_verify_nonce($_POST['acx_fsmi_install_licence_refresh_w_c_n'],'acx_fsmi_install_licence_refresh_w_c_n')) die("<br><br>".__('Unknown Error Occurred, Try Again... ','floating-social-media-icon')."<a href=''>".__('Click Here','floating-social-media-icon')."</a>");
+	
+	$key = $licence = $id = "";
+	$response_stat = "failed";
+	if(ISSET($_POST['key']))
+	{
+		$key = $_POST['key'];
+	}
+	if(ISSET($_POST['licence']))
+	{
+		$licence = $_POST['licence'];
+	}
+	if(function_exists('check_acx_pfsmi_license') && !function_exists('acx_check_fsmip_offline_license'))
+	{
+		$result = check_acx_pfsmi_license($licence,'',true,$id);
+	} else
+	{
+		$result = array();
+	}
+	if(ISSET($result["localkey"]))
+	{
+		$local_key = $result["localkey"];
+	}
+	else{
+		$local_key = "";
+	}
+	$acx_fsmip_licence_array = get_option('acx_fsmip_licence_array');
+	if(is_serialized($acx_fsmip_licence_array))
+	{
+		$acx_fsmip_licence_array = unserialize($acx_fsmip_licence_array);
+	}
+	if($acx_fsmip_licence_array == "" || !is_array($acx_fsmip_licence_array))
+	{
+		$acx_fsmip_licence_array = array();
+	}
+	$acx_fsmi_purchased_li_array = get_option('acx_fsmi_purchased_li_array');
+	if(is_serialized($acx_fsmi_purchased_li_array))
+	{
+		$acx_fsmi_purchased_li_array = unserialize($acx_fsmi_purchased_li_array);
+	}
+	if($acx_fsmi_purchased_li_array == "" || !is_array($acx_fsmi_purchased_li_array))
+	{
+		$acx_fsmi_purchased_li_array = array();
+	}
+	if(ISSET($result["status"]))
+	{
+		if($result["status"] == 'Active')
+		{
+			if(ISSET($acx_fsmip_licence_array[$key]))
+			{
+				if($local_key != "")
+				{
+					$acx_fsmip_licence_array[$key]['local_key'] = $local_key;
+					
+					if(!is_serialized($acx_fsmip_licence_array))
+					{
+						$acx_fsmip_licence_array = serialize($acx_fsmip_licence_array);
+					}
+					update_option('acx_fsmip_licence_array',$acx_fsmip_licence_array);
+					
+				}
+			}
+			
+		} 
+		$acx_fsmi_purchased_li_array[$licence]['status'] = $result['status'];
+		if(!is_serialized($acx_fsmi_purchased_li_array))
+		{
+			$acx_fsmi_purchased_li_array = serialize($acx_fsmi_purchased_li_array);
+		}
+		update_option('acx_fsmi_purchased_li_array',$acx_fsmi_purchased_li_array); 
+		$response_stat = "success";
+	}
+	echo $response_stat;
+	die();
+}
+add_action("wp_ajax_acx_fsmi_install_licence_refresh","acx_fsmi_install_licence_refresh_callback");
+function acx_fsmi_license_refresh_with_forcing($acx_license,$addon_key)
+{
+	$retry = true;
+	$acx_fsmi_ip =  isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : $_SERVER['LOCAL_ADDR'];
+	$acx_fsmi_domain = $_SERVER['SERVER_NAME'];
+	$acx_fsmi_directory = dirname(__FILE__);
+	$acx_fsmi_args = array(
+		'action' 	=> 'acx-li-check-latest-version',
+		'method'	=> 'addon_activation',
+		'directory' => $acx_fsmi_directory,
+		'unique_id' => $addon_key,
+		'domain' 	=> $acx_fsmi_domain,
+		'ip' 		=> $acx_fsmi_ip,
+		'licence' 	=> $acx_license
+	);
+	$acx_fsmi_unique_id = "";
+	$response_stat = "failed";
+	$acx_fsmip_licence_array = get_option('acx_fsmip_licence_array');
+	if(is_serialized($acx_fsmip_licence_array))
+	{
+		$acx_fsmip_licence_array = unserialize($acx_fsmip_licence_array);
+	}
+	if($acx_fsmip_licence_array == "" || !is_array($acx_fsmip_licence_array))
+	{
+		$acx_fsmip_licence_array = array();
+	}
+		$acx_fsmip_retry_array = get_option('acx_fsmip_retry_array');
+	if(is_serialized($acx_fsmip_retry_array))
+	{
+		$acx_fsmip_retry_array = unserialize($acx_fsmip_retry_array);
+	}
+	if($acx_fsmip_retry_array == "")
+	{
+		$acx_fsmip_retry_array = array();
+	}
+	if(!is_array($acx_fsmip_retry_array))
+	{
+		$acx_fsmip_retry_array = array();
+	}
+	if(ISSET($acx_fsmip_retry_array[$acx_license]['activation_licence_check']))
+	{
+		if($acx_fsmip_retry_array[$acx_license]['activation_licence_check'] >= 3)
+		{
+			$retry = false;	
+		}
+	}
+	if($retry == true)
+	{
+		$response = acx_fsmi_licence_activation_api_request( $acx_fsmi_args );
+		$response = json_decode($response, true);
+	}
+	
+	if(!ISSET($response['response_status']) && !ISSET($response['status']))
+	{
+		if(ISSET($acx_fsmip_retry_array[$acx_license]['activation_licence_check']))
+		{
+			$acx_fsmip_retry_array[$acx_license]['activation_licence_check'] = $acx_fsmip_retry_array[$acx_license]['activation_licence_check'] + 1;
+		}
+		else{
+			$acx_fsmip_retry_array[$acx_license]['activation_licence_check'] =  1;
+		}
+	}
+	else
+	{
+		if($response['response_status'] == "success" &&  $response['status'] == "Active")
+		{
+			$acx_fsmi_purchased_li_array = get_option('acx_fsmi_purchased_li_array');
+			if(is_serialized($acx_fsmi_purchased_li_array))
+			{
+				$acx_fsmi_purchased_li_array = unserialize($acx_fsmi_purchased_li_array);
+			}
+			if($acx_fsmi_purchased_li_array == "" || !is_array($acx_fsmi_purchased_li_array))
+			{
+				$acx_fsmi_purchased_li_array = array();
+			}
+			$acx_fsmi_unique_id = trim($response['unique_id']);
+			$acx_fsmi_purchased_li_array[$acx_license] = array(
+			'slug' => $response['slug'],
+			'status' => $response['status'],
+			'download_dynamic_url' => $response['download_dynamic_url']
+			); 
+			// update licence array
+			
+			$acx_fsmip_licence_array[$acx_fsmi_unique_id]['addon_name'] = $response['name'];
+			$acx_fsmip_licence_array[$acx_fsmi_unique_id]['licence_code'] = $acx_license;
+			if($response['localkey'] != "")
+			{
+				$acx_fsmip_licence_array[$acx_fsmi_unique_id]['local_key'] = $response['localkey'];
+			}
+			if(!is_serialized($acx_fsmip_licence_array))
+			{
+				$acx_fsmip_licence_array = serialize($acx_fsmip_licence_array);
+			}
+			update_option('acx_fsmip_licence_array',$acx_fsmip_licence_array); 
+			if(!is_serialized($acx_fsmi_purchased_li_array))
+			{
+				$acx_fsmi_purchased_li_array = serialize($acx_fsmi_purchased_li_array);
+			}
+			update_option('acx_fsmi_purchased_li_array',$acx_fsmi_purchased_li_array); 
+			$acx_fsmip_retry_array[$acx_license]['activation_licence_check'] =  0;
+			if(!is_serialized($acx_fsmip_retry_array))
+			{
+				$acx_fsmip_retry_array = serialize($acx_fsmip_retry_array);
+			}
+			update_option('acx_fsmip_retry_array',$acx_fsmip_retry_array);
+			$response_stat = $response['response_status'];
+		}
+	}
+
+	return $response_stat;
+}
 function acx_fsmi_load_plugin_textdomain() {
     load_plugin_textdomain( 'floating-social-media-icon', FALSE, basename( dirname( __FILE__ ) ) . '/lang/' );
 }

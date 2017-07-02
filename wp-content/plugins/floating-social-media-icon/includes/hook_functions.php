@@ -12,7 +12,7 @@ function acx_fsmi_nonce_field()
 } add_action('acx_fsmi_hook_option_fields','acx_fsmi_nonce_field',10);
 function acx_fsmi_option_form_start()
 {
-	echo "<form name='acx_fsmi_form' id='acx_fsmi_form'  method='post' action='".str_replace( '%7E', '~',$_SERVER['REQUEST_URI'])."'>";
+	echo "<form name='acx_fsmi_form' id='acx_fsmi_form'  method='post' action='".esc_url(str_replace( '%7E', '~',$_SERVER['REQUEST_URI']))."'>";
 } add_action('acx_fsmi_hook_option_form_head','acx_fsmi_option_form_start',100);
 function acx_fsmi_option_form_end()
 {
@@ -169,7 +169,7 @@ function acx_fsmi_misc_nonce_field()
 } add_action('acx_fsmi_misc_hook_option_fields','acx_fsmi_misc_nonce_field',10);
 function acx_fsmi_misc_option_form_start()
 {
-	echo "<form name='acx_fsmi_misc_form' id='acx_fsmi_form'  method='post' action='".str_replace( '%7E', '~',$_SERVER['REQUEST_URI'])."'>";
+	echo "<form name='acx_fsmi_misc_form' id='acx_fsmi_form'  method='post' action='".esc_url(str_replace( '%7E', '~',$_SERVER['REQUEST_URI']))."'>";
 } add_action('acx_fsmi_misc_hook_option_form_head','acx_fsmi_misc_option_form_start',100);
 function acx_fsmi_misc_option_form_end()
 {

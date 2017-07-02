@@ -4,7 +4,7 @@ Plugin Name: Social Media Flying Icons | Floating Social Media Icon
 Plugin URI: http://www.acurax.com/products/floating-social-media-icon-plugin-wordpress/
 Description: Floating Social Media Icon / Social Media Floating Icons  is a complete solution that help you to have Interactive Social Media Icons on your website which links to your social media profiles. The icons will catch your visitors attention by flying from top left to bottom right of your website.Its highly customizable with Drag and Drop Icon Reorder, Icon Size, Multiple Icon Styles etc.
 Author: Acurax 
-Version: 4.2.1
+Version: 4.2.5
 Author URI: http://www.acurax.com/home.php
 License: GPLv2 or later
 Text Domain: floating-social-media-icon
@@ -31,7 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 define("ACX_FSMI_BASE_LOCATION",plugin_dir_url( __FILE__ ));
 define("ACX_FSMI_WP_SLUG","floating-social-media-icon");
 define('ACX_FSMI_TOTAL_STATIC_SERVICES', 8);
-define('ACX_FSMI_C_VERSION', '4.2.1');
+define('ACX_FSMI_C_VERSION', '4.2.5');
 include_once(plugin_dir_path( __FILE__ ).'/function.php');
 include_once(plugin_dir_path( __FILE__ ).'/includes/hooks.php');
 include_once(plugin_dir_path( __FILE__ ).'/includes/hook_functions.php');

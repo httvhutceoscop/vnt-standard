@@ -68,5 +68,36 @@ return $count;
 
 
 function vav_get_events($showPost = 0) {
+    $args = array(
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'post_status' => 'publish',
+        'post_type' => 'event'
+    );
+    $query = new WP_Query( $args );
+    $aPosts = $query->posts;
 
+    $aEvents = [];
+    foreach ($aPosts as $key => $post) {
+        $post_id = $post->ID;
+        $date = types_field_meta_value('date', $post_id);
+        $venue = types_field_meta_value('venue', $post_id);
+        $location = types_field_meta_value('location', $post_id);
+        $featuring = types_field_meta_value('featuring', $post_id);
+        $post_thumbnail = get_the_post_thumbnail_url($post_id);
+
+        if ($post_thumbnail == '') {
+            $post_thumbnail = 'http://www.andreabocelli.com/wp-content/uploads/sites/2/2017/04/top-orvieto-150x150.jpg';
+        }
+
+        $post->date_event = $date;
+        $post->venue = $venue;
+        $post->location = $location;
+        $post->featuring = $featuring;
+        $post->post_thumbnail = $post_thumbnail;
+
+        array_push($aEvents, $post);
+    }
+
+    return $aEvents;
 }

@@ -15,19 +15,13 @@
                 <div class="tourdates-future">
 
                     <?php
-                        $args = array(
-                                'orderby' => 'date',
-                                'order' => 'DESC',
-                                'post_status' => 'publish',
-                                'post_type' => 'event',
-                                'showposts' => 10
-                        );
-                        query_posts($args);
+                    include '/../function.php'
+                    $aEvents = vav_get_events();
+                    include '/../templates/event-line.php'
 
-                     ?>
-
-                    <?php while (have_posts()) : the_post(); ?>
+                    ?>
                     <?php
+                    foreach ($aEvents as $key => $post) {
                         $date = types_field_meta_value('date', $post->ID);
                         if (isset($date['timestamp'])) {
                             $m = date('F', $date['timestamp']);
@@ -35,7 +29,6 @@
                             $d = date('d', $date['timestamp']);
                             $y = date('Y', $date['timestamp']);
                         }
-                        $postThumb = 'http://www.andreabocelli.com/wp-content/uploads/sites/2/2017/04/top-orvieto-150x150.jpg';
                     ?>
 
                     <div class="tourdates-singledate date-7869 scroll_animation scroll_bottom_low">
@@ -88,7 +81,7 @@
                         </div>
                     </div>
 
-                    <?php endwhile;?>
+                    <?php } ?>
 
                 </div>
             </div>

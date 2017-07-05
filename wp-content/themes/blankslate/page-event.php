@@ -36,7 +36,7 @@
                             $y = date('Y', $date['timestamp']);
                         }
                         $postThumb = $post->post_thumbnail;
-                        include '/templates/event-line.php';
+                        include 'templates/event-line.php';
                     }
                     ?>
                     <div class="change-month"><h6>2017</h6><h2>August</h2><div></div></div>
@@ -51,7 +51,7 @@
                             $y = date('Y', $date['timestamp']);
                         }
                         $postThumb = $post->post_thumbnail;
-                        include '/templates/event-line.php';
+                        include 'templates/event-line.php';
                     }
                     ?>
                 </div>

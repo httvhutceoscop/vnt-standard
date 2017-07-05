@@ -25,7 +25,10 @@
                             $y = date('Y', $date['timestamp']);
                         }
                         $postThumb = $post->post_thumbnail;
-                        include '/../templates/event-line.php';
+                        $path = get_template_directory_uri();
+                        $documentRoot = dirname(dirname(__FILE__));
+                        include_once $path."/templates/event-line.php";
+                        // include '/../templates/event-line.php';
                     }
                     ?>
 

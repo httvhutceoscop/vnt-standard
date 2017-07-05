@@ -26,7 +26,7 @@
     <div id="inner-wrapper" class="website-wrapper">
 
     <header id="header" class="menu-wrapper" role="banner">
-        <a class="menu-logo" href="http://www.andreabocelli.com"></a>
+        <a class="menu-logo" href="/"></a>
         <nav id="menu" role="navigation">
             <div class="menu-inside">
             <?php wp_nav_menu(

@@ -2,19 +2,9 @@
 
 <?php get_header(); ?>
 
-
-<?php
-$aEvents = vav_get_events();
-
-print_r("<pre>");
-print_r($aEvents);
-print_r("</pre>");
-
-?>
-
 <style>
     .tourdates-header {
-        background: url(http://www.andreabocelli.com/wp-content/uploads/sites/2/2014/07/header.jpg) no-repeat center center;
+        background: url('<?php echo get_template_directory_uri().'/assets/images/event-header.jpg'?>') no-repeat center center;
     }
 </style>
 
@@ -35,10 +25,35 @@ print_r("</pre>");
             <div class="tourdates-datebox-inside">
                 <div class="tourdates-nextfuture">
                     <div class="change-month"><h6>2017</h6><h2>July</h2><div></div></div>
-                    <?php include '/templates/event-line.php' ?>
-                </div>
-                <div class="tourdates-archive-date">
-                    <a class="link-arrow-common" href="http://www.andreabocelli.com/tourdates/">Archive Events</a>
+                    <?php
+                    $aEvents = vav_get_events(6);
+                    foreach ($aEvents as $key => $post) {
+                        $date = types_field_meta_value('date', $post->ID);
+                        if (isset($date['timestamp'])) {
+                            $m = date('F', $date['timestamp']);
+                            $day = date('l', $date['timestamp']);
+                            $d = date('d', $date['timestamp']);
+                            $y = date('Y', $date['timestamp']);
+                        }
+                        $postThumb = $post->post_thumbnail;
+                        include '/templates/event-line.php';
+                    }
+                    ?>
+                    <div class="change-month"><h6>2017</h6><h2>August</h2><div></div></div>
+                    <?php
+                    $aEvents = vav_get_events(2);
+                    foreach ($aEvents as $key => $post) {
+                        $date = types_field_meta_value('date', $post->ID);
+                        if (isset($date['timestamp'])) {
+                            $m = date('F', $date['timestamp']);
+                            $day = date('l', $date['timestamp']);
+                            $d = date('d', $date['timestamp']);
+                            $y = date('Y', $date['timestamp']);
+                        }
+                        $postThumb = $post->post_thumbnail;
+                        include '/templates/event-line.php';
+                    }
+                    ?>
                 </div>
             </div>
         </div>

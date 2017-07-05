@@ -3,14 +3,12 @@
 <head>
 <meta charset="<?php bloginfo( 'charset' ); ?>" />
 <meta name="viewport" content="width=device-width" />
-<link rel="stylesheet" type="text/css" href="<?php echo get_stylesheet_uri(); ?>" />
-
 <?php wp_head(); ?>
 
-<script type='text/javascript' src='http://www.andreabocelli.com/wp-content/themes/andreabocelli/js/lib/jquery.easing.js'></script>
-<script type='text/javascript' src='http://www.andreabocelli.com/wp-content/themes/andreabocelli/js/plugin/momentjs.min.js'></script>
+<!-- <script type='text/javascript' src='http://www.andreabocelli.com/wp-content/themes/andreabocelli/js/lib/jquery.easing.js'></script> -->
+<!-- <script type='text/javascript' src='http://www.andreabocelli.com/wp-content/themes/andreabocelli/js/plugin/momentjs.min.js'></script> -->
 
-<script type='text/javascript' src='http://www.andreabocelli.com/wp-content/themes/andreabocelli/js/ck/init-ck.js'></script>
+<!-- <script type='text/javascript' src='http://www.andreabocelli.com/wp-content/themes/andreabocelli/js/ck/init-ck.js'></script> -->
 <!-- <script type='text/javascript' src='http://www.andreabocelli.com/wp-content/plugins/sitepress-multilingual-cms/res/js/jquery.cookie.js'></script> -->
 
 <!-- <script type='text/javascript' src='http://www.andreabocelli.com/wp-content/plugins/sitepress-multilingual-cms/res/js/browser-redirect.js?ver=3.7.0'></script> -->

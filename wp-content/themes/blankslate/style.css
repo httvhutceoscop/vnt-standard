@@ -4991,7 +4991,8 @@ img.centered {
 .discography-archive-container > ul > li a:hover {
   background: #fff;
 }
-.discography-archive-container > ul > li a img {
+.discography-archive-container > ul > li a img,
+.discography-archive-container > ul > li a .disco-cover {
   position: relative;
   margin: 20px auto;
   border: 2px solid #fff;

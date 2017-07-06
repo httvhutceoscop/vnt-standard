@@ -15,7 +15,7 @@ $aPosts = $query->posts;
         <h2>News</h2>
     </div>
     <div class="row">
-        <div class="module-loop-blogpost-sliderbox owl-carousel owl-theme">
+        <div class="module-loop-blogpost-sliderbox ">
             <?php foreach ($aPosts as $key => $post) {
                 $post_id = $post->ID;
                 $post_title = $post->post_title;
@@ -76,7 +76,7 @@ $aPosts = $query->posts;
     </div>
     <div class="module-go-archive-slider">
         <div>
-            <a class="link-arrow-common" href="http://vva.lo/index.php/category/news/">More News</a>
+            <a class="link-arrow-common" href="#">More News</a>
         </div>
     </div>
 </div>

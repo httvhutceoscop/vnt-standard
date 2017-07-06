@@ -48,7 +48,9 @@
             $post_date = date('m/d/Y', strtotime($post_date));
             $post_title = $post->post_title;
             $post_thumbnail = get_the_post_thumbnail_url($post_id);
-            $post_thumbnail = 'http://via.placeholder.com/320x320';
+            if ( empty($post_thumbnail) ) {
+                $post_thumbnail = 'http://via.placeholder.com/320x320';
+            }
             $discoType = types_field_meta_value('discograpy-types', $post_id);
 
             switch ($discoType) {
@@ -73,7 +75,7 @@
             } ?>
             <?php
             echo    '<a href="'.$link.'">
-                    <img src="'.$post_thumbnail.'" alt="album">
+                    <div class="disco-cover" style="background:url('.$post_thumbnail.') no-repeat center center; background-size: cover;"></div>
                     <div class="discography-archive-details">
                         <p>'.$post_date.'</p>
                         <h5>'.$post_title.'</h5>

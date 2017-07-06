@@ -21,6 +21,8 @@ if (is_user_logged_in()) {
     print_r("<pre>");
     print_r($year);
     print_r($url_career);
+    print_r($pathInfo);
+    print_r($_SERVER);
     print_r("</pre>");
 }
 

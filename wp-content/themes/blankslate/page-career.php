@@ -16,6 +16,14 @@ if (count($pathInfo) == 4) {
 $aCareers = vav_get_careers($year);
 
 $url_career = 'http://'.$_SERVER['SERVER_NAME'].'/index.php/career/';
+
+if (is_user_logged_in()) {
+    print_r("<pre>");
+    print_r($year);
+    print_r($url_career);
+    print_r("</pre>");
+}
+
 ?>
 
 <div class="career-timeline-box">

@@ -8,23 +8,14 @@ $listYears = array_unique($listYears);
 rsort($listYears);
 
 $year = $listYears[0];
-$pathInfo = $_SERVER['PATH_INFO'];
+$pathInfo = $_SERVER['REQUEST_URI'];
 $pathInfo = explode('/', $pathInfo);
-if (count($pathInfo) == 4) {
-    $year = $pathInfo[2];
+if (!empty($pathInfo[3])) {
+    $year = $pathInfo[3];
 }
 $aCareers = vav_get_careers($year);
 
 $url_career = 'http://'.$_SERVER['SERVER_NAME'].'/index.php/career/';
-
-if (is_user_logged_in()) {
-    print_r("<pre>");
-    print_r($year);
-    print_r($url_career);
-    print_r($pathInfo);
-    print_r($_SERVER);
-    print_r("</pre>");
-}
 
 ?>
 

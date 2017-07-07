@@ -7748,7 +7748,7 @@ img.logo-calendar {
 .module-sponsored-slideshow {
   position: relative;
   margin: auto auto;
-  height: 515px;
+  /* height: 515px; */
   width: 100%;
   opacity: 0;
 }

@@ -1313,8 +1313,9 @@ p {
 }
 .typo-blog p {
   font-family: 'proxima_nova_rgregular';
-  font-size: 19px;
-  line-height: 2.0em;
+  font-size: 18px;
+  line-height: 22px;
+  margin-bottom: 10px;
   color: #7b7b7b;
 }
 .typo-blog .post-content {

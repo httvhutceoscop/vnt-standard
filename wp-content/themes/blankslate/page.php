@@ -3,6 +3,7 @@
 <style>
     .tourdates-header {
         background: url('<?php echo get_template_directory_uri().'/assets/images/event-header.jpg'?>') no-repeat center center;
+        background-size: cover;
     }
 </style>
 
@@ -11,7 +12,8 @@
     <div class="row">
         <div class="textbox-inside">
             <h6>Vo Van Anh</h6>
-            <h1>Contact</h1>
+            <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+            <!-- <h1>Contact</h1> -->
         </div>
     </div>
 </div>

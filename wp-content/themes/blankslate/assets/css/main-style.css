@@ -2,6 +2,44 @@
  * ==========================
  */
 
+ /*Contact form*/
+.wpcf7-form .text {
+  margin-bottom: 10px;
+}
+
+.wpcf7-form .text input[type="text"],
+.wpcf7-form .text input[type="email"],
+.wpcf7-form .text textarea {
+  outline: none;
+  width: 100%;
+  padding: 5px 10px 5px 0;
+  background: transparent;
+  border-bottom: 1px solid #d7d7d7;
+  font-size: 16px;
+}
+.wpcf7-form .text input[type="text"]:focus,
+.wpcf7-form .text input[type="email"]:focus,
+.wpcf7-form .text textarea:focus {
+  border-bottom: 1px solid #252525;  
+}
+.wpcf7-form .text textarea {
+  height: 100px;
+  resize: none;
+}
+.wpcf7-form .text.submit {
+  text-align: center;
+}
+.wpcf7-form input[type='submit'] {
+  padding: 5px 10px;
+  font-size: 16px;
+  color: #fff;
+  background: #1d1d1d;
+}
+.wpcf7-form input[type="submit"]:hover {
+    background: #807e7e;
+}
+
+
 .edit-link {
   z-index: 1;
 }
@@ -42,27 +80,34 @@ img[class*="align"], img[class*="wp-image-"], img[class*="attachment-"] {
 
 
 @media only screen and (max-width: 1024px) {
-.bio-pic-1, .bio-pic-2, .bio-pic-3 {
-    -webkit-clip-path: initial;
-    clip-path: initial;
-    shape-outside: initial;
-    -webkit-shape-outside: initial;
-    max-width: 60% !important;
-    margin-right: 0 !important;
-    transform: rotate(0);
-    -webkit-transform: rotate(0);
-    position: relative;
+  .bio-pic-1, .bio-pic-2, .bio-pic-3 {
+      -webkit-clip-path: initial;
+      clip-path: initial;
+      shape-outside: initial;
+      -webkit-shape-outside: initial;
+      max-width: 60% !important;
+      margin-right: 0 !important;
+      transform: rotate(0);
+      -webkit-transform: rotate(0);
+      position: relative;
+  }
 }
 
 @media only screen and (max-width: 1024px) {
-.bio-pic-1 {
-    margin: 0 0 12px 15px !important;
+  .bio-pic-1 {
+      margin: 0 0 12px 15px !important;
+  }
 }
 
 @media only screen and (max-width: 667px) {
-.bio-pic-1, .bio-pic-2, .bio-pic-3 {
-    max-width: 100% !important;
-    margin: 12px 0 12px 0 !important;
+  .bio-pic-1, .bio-pic-2, .bio-pic-3 {
+      max-width: 100% !important;
+      margin: 12px 0 12px 0 !important;
+  }
+  .typo-blog h6 {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+  }
 }
 blockquote {
     margin: 1.75rem 0;
@@ -109,12 +154,10 @@ blockquote p.quote-author, .quote-author {
 
 .contact-content .typo-blog p {
   font-family: 'proxima_nova_rgregular';
-  font-size: 19px;
+  font-size: 16px;
   line-height: 159%;
   color: #7b7b7b;
 }
-
-
 
 .footer {
   position: relative;

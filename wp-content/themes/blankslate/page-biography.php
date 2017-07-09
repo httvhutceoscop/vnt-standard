@@ -12,7 +12,8 @@ $thumb = get_template_directory_uri().'/assets/images/biograhpy.jpg';
 <div class="container-fluid operas-archive-page max-1280">
     <div class="module-title-section">
         <p>About</p>
-        <h2>Biography</h2>
+        <?php the_title( '<h2 class="entry-title">', '</h2>' ); ?>
+        <!-- <h2>Biography</h2> -->
     </div>
 </div>
 <div class="container-fluid biography-archive-page-content max-1280">

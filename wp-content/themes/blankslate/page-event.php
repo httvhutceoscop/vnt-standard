@@ -5,6 +5,7 @@
 <style>
     .tourdates-header {
         background: url('<?php echo get_template_directory_uri().'/assets/images/event-header.jpg'?>') no-repeat center center;
+        background-size: cover;
     }
 </style>
 

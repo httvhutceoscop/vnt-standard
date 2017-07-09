@@ -183,3 +183,24 @@ function vav_get_careers($year = null, $countYear = false) {
 
     return $aCareers;
 }
+
+function vav_switch_language() {
+    $txt = '';
+    $translations = pll_the_languages(array('raw'=>1));
+    $current_language = pll_current_language();
+    $active_en = 'active';
+    $active_vi = '';
+    $url_en = $translations['en']['url'];
+    $url_vi = $translations['vi']['url'];
+
+    if ($current_language == 'vi') {
+        $active_en = '';
+        $active_vi = 'active';
+    }
+
+    $txt = '<a href="'.$url_en.'" class="'.$active_en.'">en</a>
+            <div></div>
+            <a href="'.$url_vi.'" class="'.$active_vi.'">vi</a>';
+
+    return $txt;
+}

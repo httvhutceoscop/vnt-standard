@@ -41,11 +41,9 @@
             <div class="menu-socialbox">
                 <div class="menu-lang-search-wrap">
                   <div class="lang-wrapper">
-                    <div class="lang-control"><a href="#" class="active">en</a>
-                      <div></div>
-                                          <a href="#/vi/">vi</a>
-
-                                      </div>
+                    <div class="lang-control">
+                      <?php echo vav_switch_language(); ?>
+                    </div>
                   </div>
                   <div class="menu-search-box"><div></div></div>
                 </div>

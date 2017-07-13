@@ -57,3 +57,24 @@
             </div>
         </nav>
     </header>
+
+    <div class="search-container">
+      <div class="search-container-header">
+        <div class="search-container-header-inside">
+          <div class="search-container-header-logo"></div>
+          <div class="search-container-header-close"></div>
+        </div>
+      </div>
+      <div class="searching">
+        <div>
+          <h1>Search</h1>
+          <form role="search" method="get" id="searchform" class="searchform" action="/">
+            <div>
+              <label class="screen-reader-text" for="s">Search for:</label>
+              <input type="text" value="" name="s" id="s">
+                <input type="submit" id="searchsubmit" value="Search">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>

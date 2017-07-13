@@ -3698,9 +3698,9 @@ p {
   top: 0px;
   height: 100%;
   width: 223px;
-  opacity: 0.3;
+  /* opacity: 0.3; */
   background: url('assets/images/shared/search-logo.png') no-repeat center center;
-  background-size: 223px 22px;
+  background-size: contain;
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min--moz-device-pixel-ratio: 2), (min-resolution: 2dppx), (min-resolution: 192dpi) {
   .search-container .search-container-header .search-container-header-inside .search-container-header-logo {

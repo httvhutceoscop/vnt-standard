@@ -1,11 +1,26 @@
 <?php
 $post_id = $post->ID;
+$post_date = $post->post_date;
+$post_date = date("d-m-Y",strtotime($post_date));
 $post_thumbnail = get_the_post_thumbnail_url($post_id);
 if (empty($post_thumbnail)) {
-    $post_thumbnail = 'http://via.placeholder.com/924x320';
-}
+    //$post_thumbnail = 'http://via.placeholder.com/924x320';
+// print_r("<pre>");
+// print_r($post);
+// print_r("</pre>");
 ?>
 
+<div class="container-fluid textbox scroll_animation scroll_bottom max-1280">
+    <div class="row">
+        <div class="textbox-inside">
+            <h6><?php echo $post_date; ?></h6>
+            <h1><?php the_title(); ?></h1>
+            <p><?php the_excerpt(); ?></p>
+        </div>
+    </div>
+</div>
+
+<?php } else { ?>
 <div id="post-<?php the_ID(); ?>" <?php post_class('container-fluid search-blog-post'); ?>>
     <div class="row">
         <div class="col-md-6">
@@ -24,7 +39,7 @@ if (empty($post_thumbnail)) {
             <div class="inner-div">
                 <div class="search-blog-post-text module-height">
                     <div class="search-blog-post-inside">
-                        <h6>15-11-2016</h6>
+                        <h6><?php echo $post_date; ?></h6>
                         <h4>
                             <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
                             <?php edit_post_link(); ?>
@@ -39,3 +54,4 @@ if (empty($post_thumbnail)) {
         </div>
     </div>
 </div>
+<?php } ?>

@@ -77,30 +77,13 @@ jQuery( document ).ready( function( $ ) {
                       }
                     );
 
-
-
-                    /* window["envira_container_" + event.gallery_id].enviratope('layout'); */
-
                 }
 
                 
                 $('#envira-gallery-' + event.gallery_id).enviratope('layout');
 
-                /* window["envira_container_" + event.gallery_id].enviratope('layout'); */
             }
 
-
-            // window["envira_container_" + event.gallery_id].enviraImagesLoaded()
-            // .done(function() {
-            //   window["envira_container_" + event.gallery_id].enviratope('layout');
-            // })
-            // .progress(function() {
-            //   window["envira_container_" + event.gallery_id].enviratope('layout');
-            // });
-            
-
-            
-            /* envira_container_8025.enviratope('layout'); */
         }
     });
 

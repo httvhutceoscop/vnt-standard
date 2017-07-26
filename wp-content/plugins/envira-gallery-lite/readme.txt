@@ -229,6 +229,14 @@ Also, I'm an <a href="https://thomasgriffin.io" rel="me" title="WordPress Develo
 
 == Changelog ==
 
+= 1.6.1.5 =
+
+* Fix: Minor bug fixes
+
+= 1.6.1.4 =
+
+* Fix: Minor bug fixes
+
 = 1.6.1.3 =
 
 * Fix: Compress CSS files.
@@ -249,12 +257,12 @@ Also, I'm an <a href="https://thomasgriffin.io" rel="me" title="WordPress Develo
 
 = 1.6.0 =
 
-* Added: Lazy loading 
+* Added: Lazy loading
 * Fix: Minor bug fixes
 
 = 1.5.6.4 =
 
-* Fix: CSS issues TwentySeventeen  
+* Fix: CSS issues TwentySeventeen
 * Fix: Minor bug fixes.
 
 = 1.5.6.3 =

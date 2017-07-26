@@ -20,9 +20,6 @@ var responsivelyLazy = (function () {
 
     var isVisible = function (element) {
 
-        // //console.log ('windowWidth: ' + windowWidth);
-        // //console.log ('windowHeight: ' + windowHeight);
-
         if (windowWidth === null) {
 
             windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -33,31 +30,16 @@ var responsivelyLazy = (function () {
             }
         }
 
-        //console.log ('checking to see if element is isVisible');
-        // //console.log (element);
-
         var rect = element.getBoundingClientRect();
 
         var elementTop = rect.top;
         var elementLeft = rect.left;
         var elementWidth = rect.width;
         var elementHeight = rect.height;
-        // //console.log ('elementTop: ' + elementTop);
-        // //console.log ('elementLeft: ' + elementLeft);
-        // //console.log ('elementWidth: ' + elementWidth);
-        // //console.log ('elementHeight: ' + elementHeight);
         var test = elementTop < windowHeight && elementTop + elementHeight > 0 && elementLeft < windowWidth && elementLeft + elementWidth > 0;
-        // //console.log ('test');
-        // //console.log (test);
         
         if ( test === false ) { 
-            // //console.log (element);
-            // //console.log ('windowWidth: ' + windowWidth);
-            // //console.log ('windowHeight: ' + windowHeight);
-            // //console.log ('elementTop: ' + elementTop);
-            // //console.log ('elementLeft: ' + elementLeft);
-            // //console.log ('elementWidth: ' + elementWidth);
-            // //console.log ('elementHeight: ' + elementHeight);
+
         }
         return test;
     
@@ -68,7 +50,6 @@ var responsivelyLazy = (function () {
 
     var updateElement = function (container, element) {
         var options = element.getAttribute('data-envira-srcset');
-        // console.log ('options (what data-envira-srcset says): ' + options);
         if (options !== null) {
             options = options.trim();
             if (options.length > 0) {
@@ -132,7 +113,6 @@ var responsivelyLazy = (function () {
         for (var j = 0; j < optionsCount; j++) {
             var optionData = options[j];
             if (optionData[1] >= containerWidth) {
-                //console.log( 'bestSelectedOption = ' + optionData );
                 bestSelectedOption = optionData;
                 break;
             } else {
@@ -148,10 +128,6 @@ var responsivelyLazy = (function () {
             container.lastSetOption = ['', 0];
         }
         if (container.lastSetOption[1] < bestSelectedOption[1]) {
-            //console.log ('listing all bestSelectedOptions');
-            //console.log ( bestSelectedOption );
-            //console.log ('listing all container.lastSetOption');
-            //console.log ( container.lastSetOption );
             var fireEvent = container.lastSetOption[1] === 0;
             var url = bestSelectedOption[0];
             var image = new Image();
@@ -170,9 +146,6 @@ var responsivelyLazy = (function () {
             }, false);
 
             image.onload = function () {
-
-               
-               /* console.info("Image loaded !"); */
 
                 if ( container.getAttribute('class') == 'envira-lazy' ) {
                     // this is a legacy layout
@@ -228,13 +201,10 @@ var responsivelyLazy = (function () {
 
         windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
         windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-
-        //console.log('updateWindowSize');
     };
 
     var setGalleryClass = function ( theClass ) {
         galleryClass = theClass;
-        // alert ('setting - ' + galleryClass);
     }
 
     var run = function ( galleryClass ) {
@@ -244,22 +214,11 @@ var responsivelyLazy = (function () {
         }
 
         var update = function (elements, unknownHeight) {
-            // //console.log ('elements'); alert('elements');
-            // //console.log (elements);
-            // //console.log ('unknownHeight');
-            // //console.log (unknownHeight);
             var elementsCount = elements.length;
             for (var i = 0; i < elementsCount; i++) {
                 var element = elements[i];
                 var container = unknownHeight ? element : element.parentNode;
-                // //console.log( isVisible(container) );
-                // //console.log( (container) );
-                // //console.log( (elements[i]) );
                 if ( isVisible(container) === true ) {
-                    // console.log('updating element');
-                    // console.log(element);
-                    // console.log('container')
-                    // console.log(container
                     updateElement(container, element);
                 }
             }
@@ -269,9 +228,6 @@ var responsivelyLazy = (function () {
                 return;
             }
 
-            // console.log(envira_lazy_load_delay); 
-            // console.log(envira_lazy_load_initial); 
-
             if ( envira_lazy_load_delay === 'undefined' || envira_lazy_load_initial === false || envira_lazy_load_initial === 'undefined' ) {
                 /* if we can't locate these vars, at least define the delay - there is no delay, super fast */
                 envira_lazy_load_delay = 0;
@@ -279,7 +235,6 @@ var responsivelyLazy = (function () {
 
 
             myVar = setTimeout(function () {
-                // console.log('fired');
                 
                 if ( jQuery( galleryClass + ' .envira-lazy > img').exists() ) {
                     //console.log('exists');
@@ -345,12 +300,10 @@ var responsivelyLazy = (function () {
 
                 var requestAnimationFrameFunction = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {
                     window.setTimeout(callback, 1000 / 60);
-                    //console.log ('requestAnimationFrameFunction');
                 };
 
                 var hasChange = true;
                 var runIfHasChange = function () {
-                    // //console.log (justifiedReady);
                     if ( hasChange ) {
                         hasChange = false;
                         // run();
@@ -367,7 +320,6 @@ var responsivelyLazy = (function () {
                 };
 
                 var updateParentNodesScrollListeners = function () {
-                    //console.log('scroll listen');
                     var elements = document.querySelectorAll('.envira-lazy');
                     var elementsCount = elements.length;
                     for (var i = 0; i < elementsCount; i++) {
@@ -381,8 +333,6 @@ var responsivelyLazy = (function () {
                         }
                     }
                 };
-
-                //runIfHasChange();
 
             }
 

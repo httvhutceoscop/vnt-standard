@@ -15,6 +15,7 @@
   position: relative;
 }
 .menu-wrapper #menu .menu-inside > div > ul > li.menu-item-has-children:hover ul.sub-menu {
+  background: #444444;
   display: block;
   -webkit-transition: all 0.2s;
   -moz-transition: all 0.2s;
@@ -24,7 +25,7 @@
 }
 .menu-wrapper #menu .menu-inside > div > ul > li ul.sub-menu {
   display: none;
-  width: 100%;
+  width: 135%;
   position: absolute;
   z-index: 999;
   -webkit-transition: all 0.2s;
@@ -43,17 +44,23 @@
   padding: 0;
   margin: 0;
   position: relative;
+  text-align: left;
+    padding-left: 10px;
 }
 #menu ul li > ul li a {
-  outline: none;
-  display: block;
-  position: relative;
-  margin: 0;
-  padding: 8px 0px;
-  font: 10pt Arial, Helvetica, sans-serif;
-  color: #ffffff;
-  text-decoration: none;
-  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+  font-family: 'proxima_nova_rgregular';
+  text-transform: uppercase;
+  /*padding: 0 10px 0 10px;*/
+  margin-top: 5px;
+    display: inline-block;
+  font-size: 1.2em;
+  line-height: 20px;
+  letter-spacing: 1px;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  transition: all 0.2s;
 }
 #menu ul ul a:hover {
   color: #ffffff;

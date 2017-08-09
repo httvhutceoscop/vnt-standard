@@ -31,7 +31,7 @@
            <a href="#<?php //the_permalink()?>"></a>
            <div>
                <a href="<?php //the_permalink()?>"></a>
-               <a href="#<?php //the_permalink();?>" class="link-arrow-common">Info</a>
+               <a href="<?php the_permalink();?>" class="link-arrow-common">Info</a>
            </div>
        </div>
 

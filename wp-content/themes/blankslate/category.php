@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="read-more">
-                  <a class="link-arrow-common" href="">Read More</a>
+                  <a class="link-arrow-common" href="<?php the_permalink(); ?>">Read More</a>
                 </div>
             </div>
 

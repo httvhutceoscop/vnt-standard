@@ -753,6 +753,74 @@ div#n2-ss-2 .n2-ss-layers-container {
 div#n2-ss-2 .n2-ss-slide-active {
   z-index: 3;
 }
+div#n2-ss-2 .nextend-arrow {
+  cursor: pointer;
+  overflow: hidden;
+  line-height: 0 !important;
+}
+div#n2-ss-2 .nextend-arrow img {
+  vertical-align: top;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  display: inline;
+}
+div#n2-ss-2 .nextend-arrow img.n2-arrow-hover-img {
+  display: none;
+}
+div#n2-ss-2 .nextend-arrow:HOVER img.n2-arrow-hover-img {
+  display: inline;
+}
+div#n2-ss-2 .nextend-arrow:HOVER img.n2-arrow-normal-img {
+  display: none;
+}
+div#n2-ss-2 .nextend-arrow-animated {
+  overflow: hidden;
+}
+div#n2-ss-2 .nextend-arrow-animated > div {
+  position: relative;
+}
+div#n2-ss-2 .nextend-arrow-animated .n2-active {
+  position: absolute;
+}
+div#n2-ss-2 .nextend-arrow-animated-fade {
+  transition: background 0.3s, opacity 0.4s;
+}
+div#n2-ss-2 .nextend-arrow-animated-horizontal > div {
+  transition: all 0.4s;
+  left: 0;
+}
+div#n2-ss-2 .nextend-arrow-animated-horizontal .n2-active {
+  top: 0;
+}
+div#n2-ss-2 .nextend-arrow-previous.nextend-arrow-animated-horizontal:HOVER > div,
+div#n2-ss-2 .nextend-arrow-next.nextend-arrow-animated-horizontal .n2-active {
+  left: -100%;
+}
+div#n2-ss-2 .nextend-arrow-previous.nextend-arrow-animated-horizontal .n2-active,
+div#n2-ss-2 .nextend-arrow-next.nextend-arrow-animated-horizontal:HOVER > div {
+  left: 100%;
+}
+div#n2-ss-2 .nextend-arrow.nextend-arrow-animated-horizontal:HOVER .n2-active {
+  left: 0;
+}
+div#n2-ss-2 .nextend-arrow-animated-vertical > div {
+  transition: all 0.4s;
+  top: 0;
+}
+div#n2-ss-2 .nextend-arrow-animated-vertical .n2-active {
+  left: 0;
+}
+div#n2-ss-2 .nextend-arrow-animated-vertical .n2-active {
+  top: -100%;
+}
+div#n2-ss-2 .nextend-arrow-animated-vertical:HOVER > div {
+  top: 100%;
+}
+div#n2-ss-2 .nextend-arrow-animated-vertical:HOVER .n2-active {
+  top: 0;
+}
 div#n2-ss-2 .nextend-shadow {
   width: 100%;
   z-index: 0;
@@ -761,7 +829,167 @@ div#n2-ss-2 .nextend-shadow img {
   max-width: none;
   width: 100%;
 }
+div#n2-ss-2 .nextend-thumbnail-default,
+div#n2-ss-2 .nextend-thumbnail-inner {
+  overflow: hidden;
+}
+div#n2-ss-2 .n2-ss-thumb-image {
+  background-position: center center;
+  background-size: cover;
+  display: inline-block;
+  width: 100%;
+  height: auto;
+}
+div#n2-ss-2 .nextend-thumbnail-inner {
+  width: 100%;
+  height: 100%;
+}
+div#n2-ss-2 .nextend-thumbnail-button {
+  position: absolute;
+  z-index: 2;
+  transition: all 0.4s;
+  opacity: 0;
+  cursor: pointer;
+}
+div#n2-ss-2 .nextend-thumbnail-vertical .nextend-thumbnail-button {
+  left: 50%;
+  margin-left: -13px !important;
+}
+div#n2-ss-2 .nextend-thumbnail-vertical .nextend-thumbnail-previous {
+  top: -26px;
+}
+div#n2-ss-2 .nextend-thumbnail-vertical .nextend-thumbnail-previous.n2-active {
+  top: 10px;
+  opacity: 1;
+}
+div#n2-ss-2 .nextend-thumbnail-vertical .nextend-thumbnail-next {
+  bottom: -26px;
+}
+div#n2-ss-2 .nextend-thumbnail-vertical .nextend-thumbnail-next.n2-active {
+  bottom: 10px;
+  opacity: 1;
+}
+div#n2-ss-2 .nextend-thumbnail-horizontal .nextend-thumbnail-button {
+  top: 50%;
+  margin-top: -13px !important;
+  transform: rotateZ(-90deg);
+}
+div#n2-ss-2 .nextend-thumbnail-horizontal .nextend-thumbnail-previous {
+  left: -26px;
+}
+div#n2-ss-2 .nextend-thumbnail-horizontal .nextend-thumbnail-previous.n2-active {
+  left: 10px;
+  opacity: 1;
+}
+div#n2-ss-2 .nextend-thumbnail-horizontal .nextend-thumbnail-next {
+  right: -26px;
+}
+div#n2-ss-2 .nextend-thumbnail-horizontal .nextend-thumbnail-next.n2-active {
+  right: 10px;
+  opacity: 1;
+}
+div#n2-ss-2 .nextend-thumbnail-default .nextend-thumbnail-scroller {
+  position: relative;
+  float: left;
+  -webkit-box-sizing: border-box !important;
+  -moz-box-sizing: border-box !important;
+  box-sizing: border-box !important;
+  white-space: nowrap;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+div#n2-ss-2 .nextend-thumbnail-horizontal .nextend-thumbnail-scroller {
+  flex-direction: column;
+}
+div#n2-ss-2 .nextend-thumbnail-horizontal .nextend-thumbnail-scroller.nextend-thumbnail-invert-group-dir {
+  flex-direction: row;
+}
+div#n2-ss-2 .nextend-thumbnail-vertical .nextend-thumbnail-scroller {
+  flex-direction: row;
+}
+div#n2-ss-2 .nextend-thumbnail-vertical .nextend-thumbnail-scroller.nextend-thumbnail-invert-group-dir {
+  flex-direction: column;
+}
+div#n2-ss-2 .nextend-thumbnail-scroller.n2-align-content-start {
+  align-content: flex-start;
+}
+div#n2-ss-2 .nextend-thumbnail-scroller.n2-align-content-center {
+  align-content: center;
+}
+div#n2-ss-2 .nextend-thumbnail-scroller.n2-align-content-end {
+  align-content: flex-end;
+}
+div#n2-ss-2 .nextend-thumbnail-scroller.n2-align-content-space-around {
+  align-content: space-around;
+}
+div#n2-ss-2 .nextend-thumbnail-scroller.n2-align-content-space-between {
+  align-content: space-between;
+}
+div#n2-ss-2 .nextend-thumbnail-scroller.nextend-thumbnail-invert-group-dir {
+  align-content: inherit;
+}
+div#n2-ss-2 .nextend-thumbnail-scroller.nextend-thumbnail-invert-group-dir.n2-align-content-start {
+  justify-content: flex-start;
+}
+div#n2-ss-2 .nextend-thumbnail-scroller.nextend-thumbnail-invert-group-dir.n2-align-content-center {
+  justify-content: center;
+}
+div#n2-ss-2 .nextend-thumbnail-scroller.nextend-thumbnail-invert-group-dir.n2-align-content-end {
+  justify-content: flex-end;
+}
+div#n2-ss-2 .nextend-thumbnail-scroller.nextend-thumbnail-invert-group-dir.n2-align-content-space-around {
+  justify-content: space-around;
+}
+div#n2-ss-2 .nextend-thumbnail-scroller.nextend-thumbnail-invert-group-dir.n2-align-content-space-between {
+  justify-content: space-between;
+}
+html[dir="rtl"] div#n2-ss-2 .nextend-thumbnail-default .nextend-thumbnail-scroller {
+  position: relative;
+  float: right;
+}
+div#n2-ss-2 .nextend-thumbnail-default .nextend-thumbnail-scroller > div {
+  position: relative;
+  flex: 0 0 auto;
+  -webkit-box-sizing: content-box !important;
+  -moz-box-sizing: content-box !important;
+  box-sizing: content-box !important;
+  cursor: pointer;
+}
+div#n2-ss-2 .nextend-thumbnail-default .nextend-thumbnail-scroller > div.n2-active {
+  cursor: default;
+}
+div#n2-ss-2 .nextend-thumbnail-default .n2-ss-caption {
+  display: inline-block;
+  white-space: normal;
+  -webkit-box-sizing: border-box !important;
+  -moz-box-sizing: border-box !important;
+  box-sizing: border-box !important;
+  overflow: hidden;
+}
+div#n2-ss-2 .nextend-thumbnail-default .n2-caption-overlay {
+  position: absolute;
+}
+div#n2-ss-2 .nextend-thumbnail-default .n2-caption-overlay div {
+  float: left;
+  clear: left;
+}
+div#n2-ss-2 .nextend-thumbnail-horizontal .n2-ss-caption {
+  display: block;
+}
+div#n2-ss-2 .nextend-thumbnail-vertical .n2-caption-after,
+div#n2-ss-2 .nextend-thumbnail-vertical .n2-caption-before {
+  height: 100%;
+}
 
 div#n2-ss-2 .n2-ss-layer .n2-font-bd1fe23ee6c86cf5a7bdcd9472ef15d9-hover{font-family: 'Open Sans';color: #ffffff;font-size:312.5%;text-shadow: none;line-height: 1.5;font-weight: bold;font-style: italic;text-decoration: none;text-align: center;letter-spacing: normal;word-spacing: normal;text-transform: none;}
 div#n2-ss-2 .n2-ss-layer .n2-font-bd1fe23ee6c86cf5a7bdcd9472ef15d9-hover:HOVER, div#n2-ss-2 .n2-ss-layer .n2-font-bd1fe23ee6c86cf5a7bdcd9472ef15d9-hover:ACTIVE, div#n2-ss-2 .n2-ss-layer .n2-font-bd1fe23ee6c86cf5a7bdcd9472ef15d9-hover:FOCUS{}
+
+div#n2-ss-2 .n2-style-8c39bd1b5d1c821102353bb13550e669-simple{background: #242424;opacity:1;padding:3px 3px 3px 3px ;box-shadow: none;border-width: 0px;border-style: solid;border-color: #000000; border-color: RGBA(0,0,0,1);border-radius:0px;}
+
+div#n2-ss-2 .n2-style-0d7e6147d938756e488febb9fea88b5d-dot{background: #000000;background: RGBA(0,0,0,0);opacity:1;padding:0px 0px 0px 0px ;box-shadow: none;border-width: 0px;border-style: solid;border-color: #ffffff; border-color: RGBA(255,255,255,0);border-radius:0px;opacity: 0.4;
+margin: 3px;
+transition: all 0.4s;
+background-size: cover;}
+div#n2-ss-2 .n2-style-0d7e6147d938756e488febb9fea88b5d-dot.n2-active, div#n2-ss-2 .n2-style-0d7e6147d938756e488febb9fea88b5d-dot:HOVER{border-width: 0px;border-style: solid;border-color: #ffffff; border-color: RGBA(255,255,255,0.8);opacity: 1;}
 

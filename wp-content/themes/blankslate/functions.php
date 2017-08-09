@@ -67,36 +67,37 @@ function blankslate_widgets_init() {
     ) );
 }
 
-function blankslate_custom_pings( $comment )
-{
-$GLOBALS['comment'] = $comment;
+function blankslate_custom_pings( $comment ) {
+    $GLOBALS['comment'] = $comment;
 ?>
-<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>"><?php echo comment_author_link(); ?></li>
+    <li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>"><?php echo comment_author_link(); ?></li>
 <?php
 }
 add_filter( 'get_comments_number', 'blankslate_comments_number' );
-function blankslate_comments_number( $count )
-{
-if ( !is_admin() ) {
-global $id;
-$comments_by_type = &separate_comments( get_comments( 'status=approve&post_id=' . $id ) );
-return count( $comments_by_type['comment'] );
-} else {
-return $count;
-}
-}
 
-
-function vav_get_events($showPost = 0) {
-    $args = array(
-        'orderby' => 'date',
-        'order' => 'DESC',
-        'post_status' => 'publish',
-        'post_type' => 'event'
-    );
-    if ($showPost != 0) {
-        $args['showposts'] = $showPost;
+function blankslate_comments_number( $count ) {
+    if ( !is_admin() ) {
+        global $id;
+        $comments_by_type = &separate_comments( get_comments( 'status=approve&post_id=' . $id ) );
+        return count( $comments_by_type['comment'] );
+    } else {
+        return $count;
     }
+}
+
+
+function vav_get_events($showPost = 0, $nextevent = false, $isHomepage = false) {
+    $today = strtotime('12:00:00');
+    $args = array(
+        // 'orderby' => 'date',
+        // 'order' => 'DESC',
+        'post_status' => 'publish',
+        'post_type' => 'event',
+        'posts_per_page'=> -1
+    );
+    // if ($showPost != 0) {
+    //     $args['showposts'] = $showPost;
+    // }
     $query = new WP_Query( $args );
     $aPosts = $query->posts;
 
@@ -109,22 +110,49 @@ function vav_get_events($showPost = 0) {
         $location = types_field_meta_value('location', $post_id);
         $featuring = types_field_meta_value('featuring', $post_id);
         $post_thumbnail = get_the_post_thumbnail_url($post_id);
-        if ($key == 5) $rand = 1;
+        if ($key >= 5) $rand = 1;
         if ($post_thumbnail == '') {
             $post_thumbnail = get_template_directory_uri().'/assets/images/event-random-'.$rand.'.jpg';
         }
         $rand++;
 
         $post->date_event = $date;
+        $post->timestamp_event = $date['timestamp'];
         $post->venue = $venue;
         $post->location = $location;
         $post->featuring = $featuring;
         $post->post_thumbnail = $post_thumbnail;
 
+        if ($nextevent && ($date['timestamp'] < $today) ) {
+            continue;
+        }
         array_push($aEvents, $post);
     }
 
-    return $aEvents;
+    $aTimestampEvent = array();
+    foreach ($aEvents as $key => $post) {
+        $aTimestampEvent[$key] = $post->timestamp_event;
+    }
+    $sortType = $nextevent ? SORT_ASC : SORT_DESC;
+    array_multisort($aTimestampEvent, $sortType, $aEvents);
+
+    if ($isHomepage && $nextevent && $showPost != 0) {
+        $aEvents = array_slice($aEvents, 0, $showPost);
+    }
+
+    $monthTmp = null;
+    $aEvenByMonth = [];
+    foreach ($aEvents as $key => $post) {
+        $month = date('F-Y', $post->timestamp_event);
+
+        if ($monthTmp != $month) {
+            $monthTmp = $month;
+            $aEvenByMonth[$month] = [];
+        }
+        array_push($aEvenByMonth[$month], $post);
+    }
+
+    return $aEvenByMonth;
 }
 
 function vav_get_careers($year = null, $countYear = false) {

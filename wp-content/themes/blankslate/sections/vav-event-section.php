@@ -15,18 +15,18 @@
                 <div class="tourdates-future">
 
                     <?php
-                    $aEvents = vav_get_events(3);
-                    foreach ($aEvents as $key => $post) {
-                        $date = types_field_meta_value('date', $post->ID);
-                        if (isset($date['timestamp'])) {
-                            $m = date('F', $date['timestamp']);
-                            $day = date('l', $date['timestamp']);
-                            $d = date('d', $date['timestamp']);
-                            $y = date('Y', $date['timestamp']);
-                        }
-                        $postThumb = $post->post_thumbnail;
-                        // include '/../templates/event-line.php';
-
+                    $aEventByMonth = vav_get_events(6,true,true);
+                    foreach ($aEventByMonth as $month_year => $aEvents) {
+                        foreach ($aEvents as $key => $post) {
+                            $date = types_field_meta_value('date', $post->ID);
+                            if (isset($date['timestamp'])) {
+                                $m = date('F', $date['timestamp']);
+                                $day = date('l', $date['timestamp']);
+                                $d = date('d', $date['timestamp']);
+                                $y = date('Y', $date['timestamp']);
+                            }
+                            $postThumb = $post->post_thumbnail;
+                            // include 'templates/event-line.php';
                     ?>
                     <div class="tourdates-singledate event-<?php echo $post->ID;?> scroll_animation scroll_bottom_low">
                        <a href="<?php the_permalink()?>">
@@ -61,7 +61,7 @@
                                <a href="#<?php //the_permalink()?>"></a>
                                <div>
                                    <a href="<?php //the_permalink()?>"></a>
-                                   <a href="#<?php //the_permalink();?>" class="link-arrow-common">Info</a>
+                                   <a href="<?php the_permalink();?>" class="link-arrow-common">Info</a>
                                </div>
                            </div>
 
@@ -77,11 +77,18 @@
                            </div>
                        </div>
                     </div>
-                    <?php }
+                    <?php
+                        }
+                      }
                     ?>
 
                 </div>
             </div>
         </div>
+    </div>
+    <div class="module-go-archive">
+      <div>
+        <a class="link-arrow-common" href="/index.php/events/">More Events</a>
+      </div>
     </div>
 </div>

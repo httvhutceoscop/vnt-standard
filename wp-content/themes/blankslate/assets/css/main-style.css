@@ -4,7 +4,11 @@
 
 /* Dropdown menu */
 .menu-wrapper #menu, .menu-ghost-wrapper #menu {
-  height: inherit;
+  /* height: inherit; */ /*Chỉ sử dụng khi có submenu*/
+}
+
+.menu-wrapper #menu .menu-inside > div > ul, .menu-ghost-wrapper #menu .menu-inside > div > ul {
+  max-width: none;
 }
 
 .menu-wrapper #menu .menu-inside > div > ul > li:after, .menu-ghost-wrapper #menu .menu-inside > div > ul > li:after {
@@ -136,10 +140,10 @@ img[class*="align"], img[class*="wp-image-"], img[class*="attachment-"] {
 
 .bio-pic-1 {
     /* -webkit-clip-path: polygon(74% 0, 100% 90%, 120% 100%, 20% 50%); */
-    -webkit-clip-path: polygon(73% 0, 100% 86%, 40% 100%, 20% 50%);
-    clip-path: polygon(73% 0, 100% 86%, 40% 100%, 20% 50%);
-    shape-outside: polygon(73% 0, 100% 86%, 40% 100%, 20% 50%);
-    -webkit-shape-outside: polygon(73% 0, 100% 86%, 40% 100%, 20% 50%);
+    -webkit-clip-path: polygon(74% 0, 100% 90%, 120% 100%, 20% 50%);
+    clip-path: polygon(74% 0, 100% 90%, 120% 100%, 20% 50%);
+    shape-outside: polygon(74% 0, 100% 90%, 120% 100%, 20% 50%);
+    -webkit-shape-outside: polygon(74% 0, 100% 90%, 120% 100%, 20% 50%);
     max-width: 70% !important;
     margin: -24px -17% 12px 0 !important;
     position: relative;

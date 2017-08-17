@@ -149,6 +149,14 @@ img[class*="align"], img[class*="wp-image-"], img[class*="attachment-"] {
     position: relative;
 }
 
+.tourdates-singledate .singledate-datepicker .date-number > h1 {
+  font-size: 5.0em;
+}
+.tourdates-singledate .singledate-datepicker .date-month-day > p.month > span {
+  font-weight: bold;
+  border-bottom: 1px solid darkgoldenrod;
+  border-top: 1px solid darkgoldenrod;
+}
 
 @media only screen and (max-width: 1024px) {
   .bio-pic-1, .bio-pic-2, .bio-pic-3 {

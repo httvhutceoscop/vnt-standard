@@ -2,10 +2,18 @@
 
 <?php get_header(); ?>
 
+<?php
+$post_thumbnail = get_the_post_thumbnail_url($post->ID);
+if (empty($post_thumbnail)) {
+    $post_thumbnail = get_template_directory_uri().'/assets/images/event-header.jpg';
+}
+?>
+
 <style>
     .tourdates-header {
-        background: url('<?php echo get_template_directory_uri().'/assets/images/event-header.jpg'?>') no-repeat center center;
+        background: url('<?php echo $post_thumbnail;?>') no-repeat center center;
         background-size: cover;
+        height: 500px;
     }
 </style>
 

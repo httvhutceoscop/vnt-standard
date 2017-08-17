@@ -27,6 +27,7 @@
                             }
                             $postThumb = $post->post_thumbnail;
                             // include 'templates/event-line.php';
+                            $link_edit = get_edit_post_link($post->ID);
                     ?>
                     <div class="tourdates-singledate event-<?php echo $post->ID;?> scroll_animation scroll_bottom_low">
                        <a href="<?php the_permalink()?>">
@@ -39,7 +40,7 @@
                              <div class="date-number"><h1><?php echo $d; ?></h1></div>
                              <div class="date-month-day">
                                <p class="year"><?php echo $y; ?></p>
-                               <p class="month" ><?php echo $m; ?></p>
+                               <p class="month" ><span><?php echo $m; ?></span></p>
                                <p class="day" ><?php echo $day; ?></p>
 
                              </div>
@@ -75,6 +76,11 @@
                                    <div><h6><?php echo types_field_meta_value('featuring', $post->ID);?></h6></div>
                                </div>
                            </div>
+                           <?php if (is_user_logged_in()) { ?>
+                           <a style="position: absolute; right:0;" target="_blank" href="<?php echo $link_edit;?>">
+                               <p>Edit</p>
+                            </a>
+                           <?php } ?>
                        </div>
                     </div>
                     <?php

@@ -102,7 +102,6 @@ function vav_get_events($showPost = 0, $nextevent = false, $isHomepage = false) 
     $aPosts = $query->posts;
 
     $aEvents = [];
-    $rand = 1;
     foreach ($aPosts as $key => $post) {
         $post_id = $post->ID;
         $date = types_field_meta_value('date', $post_id);
@@ -110,11 +109,10 @@ function vav_get_events($showPost = 0, $nextevent = false, $isHomepage = false) 
         $location = types_field_meta_value('location', $post_id);
         $featuring = types_field_meta_value('featuring', $post_id);
         $post_thumbnail = get_the_post_thumbnail_url($post_id);
-        if ($key >= 5) $rand = 1;
+
         if ($post_thumbnail == '') {
-            $post_thumbnail = get_template_directory_uri().'/assets/images/event-random-'.$rand.'.jpg';
+            $post_thumbnail = get_template_directory_uri().'/assets/images/event-thumb-default.jpg';
         }
-        $rand++;
 
         $post->date_event = $date;
         $post->timestamp_event = $date['timestamp'];

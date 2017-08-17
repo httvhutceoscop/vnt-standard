@@ -158,6 +158,13 @@ img[class*="align"], img[class*="wp-image-"], img[class*="attachment-"] {
   border-top: 1px solid darkgoldenrod;
 }
 
+.menu-wrapper a.menu-logo, .menu-ghost-wrapper a.menu-logo {
+  left: 48%;
+  top: 20px;
+  height: 45px;
+  width: 290px;
+}
+
 @media only screen and (max-width: 1024px) {
   .bio-pic-1, .bio-pic-2, .bio-pic-3 {
       -webkit-clip-path: initial;

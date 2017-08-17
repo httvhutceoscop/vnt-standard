@@ -25,4 +25,4 @@ Note: The following is now considered a better practice (see bikeman868's answer
 CREATE DATABASE mydatabase CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 #notice
-Set permitsion of wp-content/cache
+Set permitsion of wp-content/cache and wp-content/uploads to 777
